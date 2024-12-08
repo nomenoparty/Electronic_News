@@ -58,7 +58,7 @@ public class UserDAO implements DAOInterface<UserModel> {
         try {
             Connection con = JDBCUtil.getConnection();
 
-            String query = "SELECT * FROM user";
+            String query = "SELECT * FROM user JOIN role ON user.roleID = role.roleID";
 
             PreparedStatement pstm = con.prepareStatement(query);
 
@@ -66,12 +66,14 @@ public class UserDAO implements DAOInterface<UserModel> {
 
             while (rs.next()) {
                 int id = rs.getInt("userID");
+                System.out.println(id);
                 String username = rs.getString("username");
                 String password = rs.getString("password");
                 String fullName = rs.getString("fullName");
                 String status = rs.getString("status");
                 int roleID = rs.getInt("roleID");
                 String tokenUser = rs.getString("tokenUser");
+                String permission = rs.getString("title");
 
                 UserModel userModel = new UserModel();
 
@@ -82,6 +84,52 @@ public class UserDAO implements DAOInterface<UserModel> {
                 userModel.setStatus(status);
                 userModel.setRoleID(roleID);
                 userModel.setTokenUser(tokenUser);
+                userModel.setPermission(permission);
+
+                userList.add(userModel);
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
+    public ArrayList<UserModel> selectAllExceptUserID(int userID) {
+        ArrayList<UserModel> userList = new ArrayList<>();
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            String query = "SELECT * FROM user JOIN role ON user.roleID = role.roleID WHERE user.userID != ?";
+
+            PreparedStatement pstm = con.prepareStatement(query);
+
+            pstm.setInt(1, userID);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("userID");
+                System.out.println(id);
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String fullName = rs.getString("fullName");
+                String status = rs.getString("status");
+                int roleID = rs.getInt("roleID");
+                String tokenUser = rs.getString("tokenUser");
+                String permission = rs.getString("title");
+
+                UserModel userModel = new UserModel();
+
+                userModel.setUserID(id);
+                userModel.setUsername(username);
+                userModel.setPassword(password);
+                userModel.setFullName(fullName);
+                userModel.setStatus(status);
+                userModel.setRoleID(roleID);
+                userModel.setTokenUser(tokenUser);
+                userModel.setPermission(permission);
 
                 userList.add(userModel);
             }
@@ -98,7 +146,7 @@ public class UserDAO implements DAOInterface<UserModel> {
         try {
             Connection con = JDBCUtil.getConnection();
 
-            String query = "SELECT * FROM user WHERE roleID = ?";
+            String query = "SELECT * FROM user JOIN role ON user.roleID = role.roleID WHERE role.roleID = ?";
 
             PreparedStatement pstm = con.prepareStatement(query);
 
@@ -114,6 +162,7 @@ public class UserDAO implements DAOInterface<UserModel> {
                 String status = rs.getString("status");
                 int roleId = rs.getInt("roleID");
                 String tokenUser = rs.getString("tokenUser");
+                String permission = rs.getString("title");
 
                 UserModel userModel = new UserModel();
 
@@ -124,6 +173,52 @@ public class UserDAO implements DAOInterface<UserModel> {
                 userModel.setStatus(status);
                 userModel.setRoleID(roleId);
                 userModel.setTokenUser(tokenUser);
+                userModel.setPermission(permission);
+
+                userList.add(userModel);
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
+    public ArrayList<UserModel> selectAllWithRoleIDExceptUserID(int roleID, int userID) {
+        ArrayList<UserModel> userList = new ArrayList<>();
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            String query = "SELECT * FROM user JOIN role ON user.roleID = role.roleID WHERE role.roleID = ? AND user.userID != ?";
+
+            PreparedStatement pstm = con.prepareStatement(query);
+
+            pstm.setInt(1, roleID);
+            pstm.setInt(2, userID);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("userID");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String fullName = rs.getString("fullName");
+                String status = rs.getString("status");
+                int roleId = rs.getInt("roleID");
+                String tokenUser = rs.getString("tokenUser");
+                String permission = rs.getString("title");
+
+                UserModel userModel = new UserModel();
+
+                userModel.setUserID(id);
+                userModel.setUsername(username);
+                userModel.setPassword(password);
+                userModel.setFullName(fullName);
+                userModel.setStatus(status);
+                userModel.setRoleID(roleId);
+                userModel.setTokenUser(tokenUser);
+                userModel.setPermission(permission);
 
                 userList.add(userModel);
             }
@@ -181,7 +276,7 @@ public class UserDAO implements DAOInterface<UserModel> {
         try {
             Connection con = JDBCUtil.getConnection();
 
-            String query = "SELECT * FROM user WHERE username = ?";
+            String query = "SELECT * FROM user WHERE username = ? AND status = 'active'";
 
             PreparedStatement pstm = con.prepareStatement(query);
 
@@ -221,7 +316,7 @@ public class UserDAO implements DAOInterface<UserModel> {
         try {
             Connection con = JDBCUtil.getConnection();
 
-            String query = "SELECT * FROM user WHERE tokenUser = ?";
+            String query = "SELECT * FROM user WHERE tokenUser = ? AND status = 'active'";
 
             PreparedStatement pstm = con.prepareStatement(query);
 

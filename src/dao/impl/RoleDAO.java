@@ -101,4 +101,68 @@ public class RoleDAO implements DAOInterface<RoleModel> {
         }
         return roleModel;
     }
+    public RoleModel selectWithUserId(int userID) {
+        RoleModel roleModel = null;
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            String query = "SELECT * FROM role\n" +
+                    "JOIN user ON role.roleID = user.roleID\n" +
+                    "WHERE user.userID = ?";
+
+            PreparedStatement pstm = con.prepareStatement(query);
+
+            pstm.setInt(1, userID);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                int roleID = rs.getInt("roleID");
+                String title = rs.getString("title");
+                String permission = rs.getString("permission");
+
+                roleModel = new RoleModel();
+
+                roleModel.setRoleID(roleID);
+                roleModel.setTitle(title);
+                roleModel.setPermission(permission);
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return roleModel;
+    }
+    public RoleModel selectWithPermission(String permission) {
+        RoleModel roleModel = null;
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            String query = "SELECT * FROM role WHERE permission = ?";
+
+            PreparedStatement pstm = con.prepareStatement(query);
+
+            pstm.setString(1, permission);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                int roleID = rs.getInt("roleID");
+                String title = rs.getString("title");
+                String permission1 = rs.getString("permission");
+
+                roleModel = new RoleModel();
+
+                roleModel.setRoleID(roleID);
+                roleModel.setTitle(title);
+                roleModel.setPermission(permission1);
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return roleModel;
+    }
 }

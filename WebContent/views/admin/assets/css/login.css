@@ -1,0 +1,226 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        scale: 0;
+    }
+
+    to {
+        opacity: 1;
+        scale: 1;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.background {
+    position: absolute;
+    background: #2b2b2b url(../img/background.jpg) no-repeat center center/cover;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+}
+
+
+.container1 {
+    background: conic-gradient(from 90deg,
+            rgba(173, 216, 230, 0.5),
+            /* Màu xanh nhạt */
+            rgba(255, 255, 255, 0.8),
+            /* Màu trắng nhạt */
+            rgba(173, 216, 230, 0.5),
+            /* Màu xanh nhạt */
+            rgba(255, 255, 255, 0.8),
+            /* Màu trắng nhạt */
+            rgba(173, 216, 230, 0.5));
+    /* Màu xanh nhạt */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 182, 193, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+
+
+.toggle {
+    width: 300px;
+    height: 350px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.6s ease-in-out;
+}
+
+.form-container-signup {
+    width: 300px;
+    overflow: hidden;
+    transition: all 0.6s ease-in-out;
+}
+
+#form-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: fit-content;
+}
+
+.form-container i {
+    position: absolute;
+    top: -50px;
+
+    right: 3px;
+
+    font-size: 24px;
+
+    cursor: pointer;
+}
+.fa-solid.fa-delete-left1{
+    margin-right: -270px;
+}
+
+.form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    transition: all 0.6s ease-in-out;
+}
+
+.container1.active.login {
+    display: none;
+}
+
+.container1.signup {
+    display: none;
+}
+
+.container1.active.signup {
+    display: block;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: absolute;
+    height: fit-content;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control {
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    height: 36px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+    font-weight: bold;
+}
+
+.form-control:focus {
+    background-color: white;
+}
+
+.container1 label {
+    color: black;
+}
+
+.container1 a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.container1 .form-submit {
+    background-color: rgba(0, 123, 255, 0.8);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin: 10px 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.form-submit:hover {
+    background-color: rgb(58, 155, 215);
+}
+
+.btn-signup,
+.btn-login {
+    background-color: rgba(0, 123, 255, 0.8);
+    margin: 5px 0;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-signup:hover,
+.btn-login:hover {
+    background-color: white;
+}
+
+#forgot {
+    font-size: 14px;
+    width: 100%;
+    text-align: right;
+}
+
+#forgot:hover {
+    text-decoration: underline;
+    color: rgb(57, 74, 201);
+}
+
+.form-group.error input {
+    border: 2px solid red;
+    box-shadow: 0 0 10px red;
+}
+
+.blurred {
+    filter: blur(5px);
+    pointer-events: none;
+    /* Ngăn chặn tương tác với nội dung mờ */
+}

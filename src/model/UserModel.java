@@ -8,6 +8,7 @@ public class UserModel {
     private String status;
     private String tokenUser;
     private int roleID;
+    private String permission;
 
     public UserModel(){}
 
@@ -65,5 +66,13 @@ public class UserModel {
 
     public void setRoleID(int roleID) {
         this.roleID = roleID;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 }

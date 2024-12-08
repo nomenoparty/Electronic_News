@@ -9,8 +9,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.title;
-
 public class CommentDAO implements DAOInterface<CommentModel> {
     @Override
     public int insert(CommentModel t) {
