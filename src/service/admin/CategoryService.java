@@ -25,6 +25,9 @@ public class CategoryService {
     public ArrayList<CategoryModel> selectAllCategoriesWithParentID(int parentID){
         return categoryDAO.selectAllWithParentID(parentID);
     }
+    public ArrayList<CategoryModel> selectAllCategoriesExceptParentID(int parentID){
+        return categoryDAO.selectAllExceptParentID(parentID);
+    }
     public CategoryModel selectById(int id){
         return categoryDAO.selectById(id);
     }

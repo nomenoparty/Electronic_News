@@ -29,7 +29,6 @@ import javax.servlet.http.HttpServletResponse;
 public class UpdateCategoryController extends HttpServlet {
     private CheckRoleService checkRoleService = new CheckRoleService();
     private CategoryService categoryService = new CategoryService();
-    private UserService userService = new UserService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserModel user = (UserModel) req.getAttribute("user");

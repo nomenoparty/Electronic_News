@@ -17,7 +17,7 @@ public class ArticleDAO implements DAOInterface<ArticleModel> {
             Connection con = JDBCUtil.getConnection();
 
             String query = "INSERT INTO article(title, content, slug, createdAt, categoryID) "
-                    + "VALUES (?, ?, ?, ?, ?, ?)";
+                    + "VALUES (?, ?, ?, ?, ?)";
 
             PreparedStatement pstm = con.prepareStatement(query);
 
@@ -47,15 +47,17 @@ public class ArticleDAO implements DAOInterface<ArticleModel> {
         try {
             Connection con = JDBCUtil.getConnection();
 
-            String query = "UPDATE article SET title = ?, content = ?, slug = ?, categoryID = ? WHERE articleID = ?";
+            String query = "UPDATE article SET title = ?, content = ?, slug = ?, createdAt = ?, categoryID = ? WHERE articleID = ?";
 
             PreparedStatement pstm = con.prepareStatement(query);
 
             pstm.setString(1, t.getTitle());
             pstm.setString(2, t.getContent());
             pstm.setString(3, t.getSlug());
-            pstm.setInt(4, t.getCategoryID());
-            pstm.setInt(5, t.getArticleID());
+            Date date = new Date();
+            pstm.setTimestamp(4, new Timestamp(date.getTime()));
+            pstm.setInt(5, t.getCategoryID());
+            pstm.setInt(6, t.getArticleID());
 
             row = pstm.executeUpdate();
 
@@ -102,7 +104,8 @@ public class ArticleDAO implements DAOInterface<ArticleModel> {
         try {
             Connection con = JDBCUtil.getConnection();
 
-            String query = "SELECT * FROM article";
+            String query = "SELECT article.articleID, article.title AS titleArticle, article.content, article.slug, article.createdAt, article.categoryID, category.title AS titleCategory\n" +
+                    "FROM article JOIN category ON article.categoryID = category.categoryID ORDER BY article.createdAt DESC;";
 
             PreparedStatement pstm = con.prepareStatement(query);
 
@@ -110,11 +113,12 @@ public class ArticleDAO implements DAOInterface<ArticleModel> {
 
             while (rs.next()) {
                 int articleID = rs.getInt("articleID");
-                String title = rs.getString("title");
+                String title = rs.getString("titleArticle");
                 String content = rs.getString("content");
                 String Slug = rs.getString("slug");
                 Timestamp createdAt = rs.getTimestamp("createdAt");
                 int categoryID = rs.getInt("categoryID");
+                String titleCategory = rs.getString("titleCategory");
 
                 ArticleModel articleModel = new ArticleModel();
 
@@ -124,6 +128,7 @@ public class ArticleDAO implements DAOInterface<ArticleModel> {
                 articleModel.setSlug(Slug);
                 articleModel.setCreatedAt(createdAt);
                 articleModel.setCategoryID(categoryID);
+                articleModel.setTitleCategory(titleCategory);
 
                 articleList.add(articleModel);
             }
@@ -137,7 +142,41 @@ public class ArticleDAO implements DAOInterface<ArticleModel> {
 
     @Override
     public ArticleModel selectById(int id) {
-        return null;
+        ArticleModel articleModel = null;
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            String query = "SELECT * FROM article WHERE articleID = ?";
+
+            PreparedStatement pstm = con.prepareStatement(query);
+
+            pstm.setInt(1, id);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                int articleID = rs.getInt("articleID");
+                String title = rs.getString("title");
+                String content = rs.getString("content");
+                String Slug = rs.getString("slug");
+                Timestamp createdAt = rs.getTimestamp("createdAt");
+                int categoryID = rs.getInt("categoryID");
+
+                articleModel = new ArticleModel();
+
+                articleModel.setArticleID(articleID);
+                articleModel.setTitle(title);
+                articleModel.setContent(content);
+                articleModel.setSlug(Slug);
+                articleModel.setCreatedAt(createdAt);
+                articleModel.setCategoryID(categoryID);
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return articleModel;
     }
     public ArticleModel selectBySlug(String slug) {
         ArticleModel articleModel = null;

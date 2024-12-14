@@ -9,7 +9,7 @@ public class ArticleModel {
     private String slug;
     private Timestamp createdAt;
     private int categoryID;
-
+    private String titleCategory;
 
     public Timestamp getCreatedAt() {
         return createdAt;
@@ -59,5 +59,13 @@ public class ArticleModel {
 
     public void setCategoryID(int categoryID) {
         this.categoryID = categoryID;
+    }
+
+    public String getTitleCategory() {
+        return titleCategory;
+    }
+
+    public void setTitleCategory(String titleCategory) {
+        this.titleCategory = titleCategory;
     }
 }

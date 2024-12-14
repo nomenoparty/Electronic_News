@@ -188,6 +188,42 @@ public class CategoryDAO implements DAOInterface<CategoryModel> {
         return categoryList;
     }
 
+    public ArrayList<CategoryModel> selectAllExceptParentID(int parentID) {
+        ArrayList<CategoryModel> categoryList = new ArrayList<>();
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            String query = "SELECT * FROM category WHERE parentID != ?";
+
+            PreparedStatement pstm = con.prepareStatement(query);
+
+            pstm.setInt(1, parentID);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                int categoryID = rs.getInt("categoryID");
+                String title = rs.getString("title");
+                String slug = rs.getString("slug");
+                int parentId = rs.getInt("parentID");
+
+                CategoryModel categoryModel = new CategoryModel();
+
+                categoryModel.setCategoryID(categoryID);
+                categoryModel.setTitle(title);
+                categoryModel.setSlug(slug);
+                categoryModel.setParentID(parentId);
+
+                categoryList.add(categoryModel);
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categoryList;
+    }
+
     @Override
     public CategoryModel selectById(int id) {
         CategoryModel categoryModel = null;

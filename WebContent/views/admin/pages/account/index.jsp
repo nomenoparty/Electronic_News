@@ -14,11 +14,11 @@
 
 <style>
     #createModal .modal-dialog {
-    max-width: 580px; /* Thay đổi độ rộng */
+    max-width: 580px;
     width: 100%;
     }
     #editModal .modal-dialog {
-      max-width: 580px; /* Thay đổi độ rộng */
+      max-width: 580px;
       width: 100%;
     }
 </style>
@@ -66,14 +66,11 @@
             </h1>
             <div class="card mb-3">
                 <div class="card-header">
-                    Bộ lọc và Tìm kiếm
+                    Tìm kiếm
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
-                            <button class="btn btn-sm ml-1 btn-outline-success active">Tất cả</button>
-                            <button class="btn btn-sm ml-1 btn-outline-success">Hoạt động</button>
-                            <button class="btn btn-sm ml-1 btn-outline-success">Không hoạt động</button>
                         </div>
                         <div class="col-6">
                             <form id="form-search">
