@@ -52,4 +52,7 @@ public class CategoryService {
 
         return 0;
     }
+    public int getCategorySize(){
+        return categoryDAO.countCategory();
+    }
 }

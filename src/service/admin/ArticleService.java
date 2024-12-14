@@ -47,4 +47,7 @@ public class ArticleService {
 
         return articleDAO.delete(articleModel);
     }
+    public int getArticleSize(){
+        return articleDAO.countArticle();
+    }
 }

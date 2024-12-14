@@ -254,4 +254,25 @@ public class ArticleDAO implements DAOInterface<ArticleModel> {
         }
         return articleList;
     }
+    public int countArticle() {
+        int count = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            String query = "SELECT COUNT(articleID) AS count FROM article;";
+
+            PreparedStatement pstm = con.prepareStatement(query);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                count = rs.getInt("count");
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 }

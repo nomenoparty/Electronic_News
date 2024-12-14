@@ -49,7 +49,55 @@
         </div>
 
         <div class="main">
-
+            <h1 class="mb-4">
+                Tổng quan
+            </h1>
+            <div class="row mt-4">
+                <div class="col-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            Danh mục
+                        </div>
+                        <div class="card-body">
+                            <p>Số lượng: <b>${categorySize}</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            Bài viết
+                        </div>
+                        <div class="card-body">
+                            <p>Số lượng: <b>${articleSize}</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            Tài khoản admin
+                        </div>
+                        <div class="card-body">
+                            <p>Số lượng: <b>${adminActiveSize + adminInactiveSize}</b></p>
+                            <p>Hoạt động: <b>${adminActiveSize}</b></p>
+                            <p>Dừng hoạt động: <b>${adminInactiveSize}</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            Tài khoản client
+                        </div>
+                        <div class="card-body">
+                            <p>Số lượng: <b>${clientActiveSize + clientInactiveSize}</b></p>
+                            <p>Hoạt động: <b>${clientActiveSize}</b></p>
+                            <p>Dừng hoạt động: <b>${clientInactiveSize}</b></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

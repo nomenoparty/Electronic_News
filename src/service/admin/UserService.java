@@ -22,4 +22,10 @@ public class UserService {
 
         userDAO.delete(userModel);
     }
+    public int getClientActiveSize(){
+        return userDAO.countClientByStatus("active");
+    }
+    public int getClientInactiveSize(){
+        return userDAO.countClientByStatus("inactive");
+    }
 }

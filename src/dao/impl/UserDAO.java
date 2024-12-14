@@ -496,4 +496,50 @@ public class UserDAO implements DAOInterface<UserModel> {
         }
         return row;
     }
+    public int countAdminByStatus(String status) {
+        int count = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            String query = "SELECT COUNT(userID) AS count FROM user WHERE (roleID = 2 OR roleID = 3 OR roleID = 4) AND status=?;";
+
+            PreparedStatement pstm = con.prepareStatement(query);
+
+            pstm.setString(1, status);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                count = rs.getInt("count");
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+    public int countClientByStatus(String status) {
+        int count = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            String query = "SELECT COUNT(userID) AS count FROM user WHERE (roleID = 1) AND status=?;";
+
+            PreparedStatement pstm = con.prepareStatement(query);
+
+            pstm.setString(1, status);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                count = rs.getInt("count");
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 }

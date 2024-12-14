@@ -38,4 +38,10 @@ public class AdminService {
 
         return userDAO.insert(admin);
     }
+    public int getAdminActiveSize(){
+        return userDAO.countAdminByStatus("active");
+    }
+    public int getAdminInactiveSize(){
+        return userDAO.countAdminByStatus("inactive");
+    }
 }

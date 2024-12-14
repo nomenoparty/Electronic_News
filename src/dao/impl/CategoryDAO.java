@@ -292,4 +292,25 @@ public class CategoryDAO implements DAOInterface<CategoryModel> {
         }
         return categoryModel;
     }
+    public int countCategory() {
+        int count = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            String query = "SELECT COUNT(categoryID) AS count FROM category;";
+
+            PreparedStatement pstm = con.prepareStatement(query);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                count = rs.getInt("count");
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 }
