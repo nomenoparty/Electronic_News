@@ -1,16 +1,22 @@
 package controller.admin;
 
-import helper.CategoryTree;
+import com.google.gson.Gson;
+import dao.impl.UserDAO;
+import helper.GenerateToken;
 import model.CategoryModel;
+import model.RoleModel;
 import model.UserModel;
+import org.json.JSONObject;
 import service.admin.AdminService;
 import service.admin.CategoryService;
 import service.admin.CheckRoleService;
+import service.admin.UserService;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Map;
 
+import javax.management.relation.Role;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,11 +25,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = { "/admin/category" })
-public class CategoryController extends HttpServlet {
-    private CategoryService categoryService = new CategoryService();
+@WebServlet(urlPatterns = { "/admin/category/update" })
+public class UpdateCategoryController extends HttpServlet {
     private CheckRoleService checkRoleService = new CheckRoleService();
-    private CategoryTree categoryTree = new CategoryTree();
+    private CategoryService categoryService = new CategoryService();
+    private UserService userService = new UserService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserModel user = (UserModel) req.getAttribute("user");
@@ -33,25 +39,35 @@ public class CategoryController extends HttpServlet {
             return;
         }
 
-        ArrayList<CategoryModel> categories = categoryService.selectAllCategories();
+        String categoryID = req.getParameter("categoryID");
 
-        Map<CategoryModel, ArrayList<CategoryModel>> map = categoryTree.getCategoryTree(categories);
+        if(categoryID != null){
+            resp.setCharacterEncoding("utf8");
+            resp.setContentType("application/json");
+            PrintWriter out = resp.getWriter();
 
-        req.setAttribute("categories", map);
+            JSONObject obj = new JSONObject();
 
-        RequestDispatcher dispactcher = req.getRequestDispatcher("/views/admin/pages/category/index.jsp");
-        dispactcher.forward(req, resp);
+            obj.put("code", 200);
+
+            CategoryModel categoryModel = categoryService.selectById(Integer.parseInt(categoryID));
+
+            Gson gson = new Gson();
+            obj.put("category", gson.toJson(categoryModel));
+
+            out.print(obj);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
-
         String title = req.getParameter("title");
         String parentID = req.getParameter("parent_id");
+        String categoryID = req.getParameter("categoryID");
 
-        categoryService.insertCategory(title, parentID.equals("") ? 0 : Integer.parseInt(parentID));
+        categoryService.updateCategory(Integer.parseInt(categoryID), title, parentID.equals("") ? 0 : Integer.parseInt(parentID));
 
         resp.sendRedirect("/admin/category");
     }

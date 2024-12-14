@@ -43,13 +43,59 @@ public class UserDAO implements DAOInterface<UserModel> {
     }
 
     @Override
-    public int update(UserModel userModel) {
-        return 0;
+    public int update(UserModel t) {
+        int row = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            String query = "UPDATE user SET username = ?, password = ?, fullName = ?, status = ?, roleID = ? WHERE userID = ?";
+
+            PreparedStatement pstm = con.prepareStatement(query);
+
+            pstm.setString(1, t.getUsername());
+            pstm.setString(2, t.getPassword());
+            pstm.setString(3, t.getFullName());
+            pstm.setString(4, t.getStatus());
+            pstm.setInt(5, t.getRoleID());
+            pstm.setInt(6, t.getUserID());
+
+            row = pstm.executeUpdate();
+
+            if (row != 0) {
+                System.out.println("Cập nhật thành công: " + row);
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return row;
     }
 
     @Override
     public int delete(UserModel userModel) {
-        return 0;
+        int row = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            String query = "DELETE FROM user " +
+                    " WHERE userID = ?";
+
+            PreparedStatement pstm = con.prepareStatement(query);
+
+            pstm.setInt(1, userModel.getUserID());
+
+            row = pstm.executeUpdate();
+
+            if (row != 0) {
+                System.out.println("Xóa thành công: " + row);
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return row;
     }
 
     @Override
@@ -236,7 +282,7 @@ public class UserDAO implements DAOInterface<UserModel> {
         try {
             Connection con = JDBCUtil.getConnection();
 
-            String query = "SELECT * FROM user WHERE userID = ?";
+            String query = "SELECT * FROM user JOIN role ON user.roleID = role.roleID WHERE userID = ?";
 
             PreparedStatement pstm = con.prepareStatement(query);
 
@@ -252,6 +298,8 @@ public class UserDAO implements DAOInterface<UserModel> {
                 String status = rs.getString("status");
                 int roleId = rs.getInt("roleID");
                 String tokenUser = rs.getString("tokenUser");
+                String permission = rs.getString("title");
+
 
                 userModel = new UserModel();
 
@@ -262,6 +310,7 @@ public class UserDAO implements DAOInterface<UserModel> {
                 userModel.setStatus(status);
                 userModel.setRoleID(roleId);
                 userModel.setTokenUser(tokenUser);
+                userModel.setPermission(permission);
             }
 
             JDBCUtil.closeConnection(con);

@@ -92,13 +92,38 @@ public class CategoryDAO implements DAOInterface<CategoryModel> {
         return row;
     }
 
+    public int deleteByParentID(int parentID) {
+        int row = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            String query = "DELETE FROM category " +
+                    " WHERE parentID = ?";
+
+            PreparedStatement pstm = con.prepareStatement(query);
+
+            pstm.setInt(1, parentID);
+
+            row = pstm.executeUpdate();
+
+            if (row != 0) {
+                System.out.println("Xóa thành công: " + row);
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
     @Override
     public ArrayList<CategoryModel> selectAll() {
         ArrayList<CategoryModel> categoryList = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
 
-            String query = "SELECT * FROM category";
+            String query = "SELECT * FROM category ORDER BY categoryID ASC;";
 
             PreparedStatement pstm = con.prepareStatement(query);
 
@@ -127,9 +152,75 @@ public class CategoryDAO implements DAOInterface<CategoryModel> {
         return categoryList;
     }
 
+    public ArrayList<CategoryModel> selectAllWithParentID(int parentID) {
+        ArrayList<CategoryModel> categoryList = new ArrayList<>();
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            String query = "SELECT * FROM category WHERE parentID = ?";
+
+            PreparedStatement pstm = con.prepareStatement(query);
+
+            pstm.setInt(1, parentID);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                int categoryID = rs.getInt("categoryID");
+                String title = rs.getString("title");
+                String slug = rs.getString("slug");
+                int parentId = rs.getInt("parentID");
+
+                CategoryModel categoryModel = new CategoryModel();
+
+                categoryModel.setCategoryID(categoryID);
+                categoryModel.setTitle(title);
+                categoryModel.setSlug(slug);
+                categoryModel.setParentID(parentId);
+
+                categoryList.add(categoryModel);
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categoryList;
+    }
+
     @Override
     public CategoryModel selectById(int id) {
-        return null;
+        CategoryModel categoryModel = null;
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            String query = "SELECT * FROM category WHERE categoryID = ?";
+
+            PreparedStatement pstm = con.prepareStatement(query);
+
+            pstm.setInt(1, id);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                int categoryID = rs.getInt("categoryID");
+                String title = rs.getString("title");
+                String slug = rs.getString("slug");
+                int parentID = rs.getInt("parentID");
+
+                categoryModel = new CategoryModel();
+
+                categoryModel.setCategoryID(categoryID);
+                categoryModel.setTitle(title);
+                categoryModel.setSlug(slug);
+                categoryModel.setParentID(parentID);
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categoryModel;
     }
 
     public CategoryModel selectBySlug(String slug) {

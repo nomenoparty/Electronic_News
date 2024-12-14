@@ -4,6 +4,7 @@ import model.CategoryModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CategoryTree {
@@ -18,7 +19,7 @@ public class CategoryTree {
     }
 
     public Map<CategoryModel, ArrayList<CategoryModel>> getCategoryTree(ArrayList<CategoryModel> categoryList){
-        Map<CategoryModel, ArrayList<CategoryModel>> map = new HashMap<>();
+        Map<CategoryModel, ArrayList<CategoryModel>> map = new LinkedHashMap<>();
 
         for(CategoryModel categoryModel: categoryList){
             if(categoryModel.getParentID() == 0){
