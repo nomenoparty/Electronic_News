@@ -73,7 +73,7 @@
                         <div class="col-6">
                         </div>
                         <div class="col-6">
-                            <form id="form-search">
+                            <form id="form-search" action="/admin/article/search" method="POST">
                                 <div class="input-group">
                                     <input type="text" placeholder="Nhập từ khóa" name="keyword" class="form-control">
                                     <div class="input-group-append">

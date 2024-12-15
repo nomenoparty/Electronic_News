@@ -73,7 +73,7 @@
                         <div class="col-6">
                         </div>
                         <div class="col-6">
-                            <form id="form-search">
+                            <form id="form-search" action="/admin/account/search" method="POST">
                                 <div class="input-group">
                                     <input type="text" placeholder="Nhập từ khóa" name="keyword" class="form-control">
                                     <div class="input-group-append">
@@ -202,7 +202,7 @@
                                     <label for="password">Mật khẩu</label>
                                     <input type="password" class="form-control" id="password1" name="password">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="role-form">
                                     <label for="role">Vai trò</label><br>
                                     <div class="form-group form-check form-check-inline">
                                         <input type="radio" class="form-check-input" id="quan_ly_he_thong1" name="role" value="quan_ly_he_thong">
@@ -216,6 +216,7 @@
                                         <input type="radio" class="form-check-input" id="quan_ly_nguoi_dung1" name="role" value="quan_ly_nguoi_dung">
                                         <label for="quan_ly_nguoi_dung" class="form-check-label">Quản lý người dùng</label>
                                     </div>
+                                    <input type="radio" class="form-check-input" id="user1" name="role" value="user" hidden>
                                 </div>
                                 <div class="form-group">
                                     <label for="status">Trạng thái</label><br>

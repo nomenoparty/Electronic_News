@@ -34,7 +34,15 @@ public class ArticleController extends HttpServlet {
             return;
         }
 
-        ArrayList<ArticleModel> articles = articleService.selectAllArticles();
+        String keyword = req.getParameter("keyword");
+
+        ArrayList<ArticleModel> articles = new ArrayList<>();
+
+        if(keyword == null || keyword.equals("")){
+            articles.addAll(articleService.selectAllArticles());
+        }else{
+            articles.addAll(articleService.searchArticles(keyword));
+        }
 
         req.setAttribute("articles", articles);
 

@@ -22,11 +22,18 @@ editButtons.forEach(button => {
 
                     const radios = formEditModal.querySelectorAll('input[name="role"]');
 
+                    let flag = true;
+
                     radios.forEach(radio => {
                         if (radio.value === data.permission) {
+                            if(data.permission !== "user") flag = false;
                             radio.checked = true;
                         }
                     });
+
+                    if(flag === true){
+                        formEditModal.querySelector("#role-form").style.display = 'none';
+                    }
 
                     const radioStatus = formEditModal.querySelectorAll('input[name="status"]');
 

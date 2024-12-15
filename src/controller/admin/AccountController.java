@@ -35,12 +35,18 @@ public class AccountController extends HttpServlet {
 
         RoleModel role = (RoleModel) req.getAttribute("role");
 
+        String keyword = req.getParameter("keyword");
+
         ArrayList<UserModel> listAccount = new ArrayList<>();
 
-        if(role.getPermission().equals("quan_ly_he_thong")){
-            listAccount.addAll(userDAO.selectAllExceptUserID(user.getUserID()));
-        }else if(role.getPermission().equals("quan_ly_nguoi_dung")){
-            listAccount.addAll(userDAO.selectAllWithRoleIDExceptUserID(1, user.getUserID()));
+        if(keyword == null || keyword.equals("")){
+            if(role.getPermission().equals("quan_ly_he_thong")){
+                listAccount.addAll(userDAO.selectAllExceptUserID(user.getUserID()));
+            }else if(role.getPermission().equals("quan_ly_nguoi_dung")){
+                listAccount.addAll(userDAO.selectAllWithRoleIDExceptUserID(1, user.getUserID()));
+            }
+        }else{
+            listAccount.addAll(adminService.search(keyword, role.getPermission(), user.getUserID()));
         }
 
         req.setAttribute("accounts", listAccount);

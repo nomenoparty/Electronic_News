@@ -157,7 +157,6 @@ public class UserDAO implements DAOInterface<UserModel> {
 
             while (rs.next()) {
                 int id = rs.getInt("userID");
-                System.out.println(id);
                 String username = rs.getString("username");
                 String password = rs.getString("password");
                 String fullName = rs.getString("fullName");

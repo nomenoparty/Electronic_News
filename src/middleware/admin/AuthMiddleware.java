@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = { "/admin/dashboard", "/admin/category", "/admin/article", "/admin/account", "/admin/account/update", "/admin/account/delete", "/admin/category/load", "/admin/category/update", "/admin/category/delete", "/admin/article/category/load", "/admin/article/update", "/admin/article/delete" })
+@WebFilter(urlPatterns = { "/admin/dashboard", "/admin/category", "/admin/article", "/admin/account", "/admin/account/update", "/admin/account/delete", "/admin/category/load", "/admin/category/update", "/admin/category/delete", "/admin/article/category/load", "/admin/article/update", "/admin/article/delete", "/admin/article/search", "/admin/account/search" })
 public class AuthMiddleware implements Filter {
     private UserDAO adminDao = new UserDAO();
     private RoleDAO roleDAO = new RoleDAO();

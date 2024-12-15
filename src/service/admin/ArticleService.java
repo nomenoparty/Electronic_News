@@ -5,9 +5,12 @@ import dao.impl.CategoryDAO;
 import helper.GenerateSlug;
 import model.ArticleModel;
 import model.CategoryModel;
+import model.UserModel;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ArticleService {
     private ArticleDAO articleDAO = new ArticleDAO();
@@ -70,5 +73,37 @@ public class ArticleService {
         });
 
         return articles;
+    }
+    public ArrayList<ArticleModel> searchArticles(String keyword){
+        ArrayList<ArticleModel> articleList = articleDAO.selectAll();
+        ArrayList<ArticleModel> searchArticleList = new ArrayList<>();
+
+        Pattern pattern = Pattern.compile(keyword.trim(), Pattern.CASE_INSENSITIVE);
+
+        for(ArticleModel article: articleList){
+            ArrayList<String> tmp = new ArrayList<>();
+            tmp.add(removeAccent(article.getTitle()).toLowerCase().trim());
+            tmp.add(removeAccent(article.getTitleCategory()).toLowerCase().trim());
+
+            for(String s: tmp){
+                Matcher matcher = pattern.matcher(s);
+                if(matcher.find()){
+                    searchArticleList.add(article);
+                    break;
+                }
+            }
+        }
+
+        return searchArticleList;
+    }
+    public String removeAccent(String text) {
+        return text
+                .replaceAll("[àáạảãâầấậẩẫăằắặẳẵ]", "a")
+                .replaceAll("[èéẹẻẽêềếệểễ]", "e")
+                .replaceAll("[ìíịỉĩ]", "i")
+                .replaceAll("[òóọỏõôồốộổỗơờớợởỡ]", "o")
+                .replaceAll("[ùúụủũưừứựửữ]", "u")
+                .replaceAll("[ỳýỵỷỹ]", "y")
+                .replaceAll("[đ]", "d");
     }
 }
