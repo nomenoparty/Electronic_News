@@ -141,8 +141,7 @@
         </c:forEach>
     </div>
 
-<script type="module" src="js/home.js"></script>
+    <script type="module" src="/views/client/assets/js/home.js"></script>
 </body>
-
 
 </html>

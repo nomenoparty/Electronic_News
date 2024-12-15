@@ -222,8 +222,7 @@
 
     </div>
 
-
+    <script type="module" src="/views/client/assets/js/home.js"></script>
 </body>
-<script type="module" src="js/home.js"></script>
 
 </html>
