@@ -89,7 +89,7 @@
                                             <i class="fa-solid fa-trash delete-btn" data-bs-toggle="modal" data-bs-target="#deleteModal" style="cursor: pointer; color: rgb(90,87,87); margin-left: 5px;"></i>
                                         </td>
                                     </tr>
-                            </c:forEach>
+                                </c:forEach>
                             </c:forEach>
                         </tbody>
                     </table>

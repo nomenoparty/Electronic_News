@@ -1,0 +1,231 @@
+.content-main {
+    /* max-width: 80%; */
+    /* margin: 0 auto; */
+    padding: 20px;
+}
+
+.breadcrumb {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.breadcrumb a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.article-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+
+.article-content {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.article-image {
+    text-align: center;
+    margin-bottom: 10px;
+
+}
+
+.article-image img {
+    width: 100%;
+    height: 300px;
+
+}
+
+.image-caption {
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+}
+
+.comment-main {
+    max-width: 100%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.comments-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.comments-header span {
+    font-size: 18px;
+    color: #888;
+}
+
+.comment-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.comment-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+
+.comment-input i {
+    font-size: 24px;
+    color: #888;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #888;
+}
+
+.tab.active {
+    color: #d0021b;
+    border-bottom: 2px solid #d0021b;
+}
+
+.comment {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.comment img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment-content .username {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.comment-content .text {
+    margin-bottom: 5px;
+}
+
+.comment-content .actions {
+    display: flex;
+    align-items: center;
+    color: #888;
+}
+
+.comment-content .actions i {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.comment-content .actions .like-count {
+    margin-right: 15px;
+}
+
+.comment-content .actions .reply {
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.comment-content .actions .time {
+    margin-left: auto;
+}
+
+.reply-form {
+    display: none;
+    margin-top: 10px;
+}
+
+.reply-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+}
+
+
+
+.toggle {
+    width: 300px;
+    height: 380px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.6s ease-in-out;
+}
+
+.form-container-signup {
+
+    width: 300px;
+    overflow: hidden;
+    transition: all 0.6s ease-in-out;
+}
+
+#form-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: fit-content;
+}
+
+.form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    transition: all 0.6s ease-in-out;
+}
+
+.fa-solid.fa-delete-left {
+    margin-right: -270px;
+    margin-top: -30px;
+}
+
+.fa-solid.fa-delete-left1 {
+    margin-right: -270px;
+}
+
+.form-group {
+    width: 100%;
+    height: 50px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control {
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    height: 35px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+    font-weight: bold;
+}
