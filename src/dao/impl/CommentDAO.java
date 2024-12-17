@@ -109,7 +109,7 @@ public class CommentDAO implements DAOInterface<CommentModel> {
         try {
             Connection con = JDBCUtil.getConnection();
 
-            String query = "SELECT * FROM comment WHERE articleID = ?";
+            String query = "SELECT * FROM comment Join user on user.userID = comment.userID WHERE articleID = ?";
 
             PreparedStatement pstm = con.prepareStatement(query);
 
@@ -118,6 +118,7 @@ public class CommentDAO implements DAOInterface<CommentModel> {
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
+                String fullName = rs.getString("fullName");
                 int commentID = rs.getInt("commentID");
                 String content = rs.getString("content");
                 Timestamp postAt = rs.getTimestamp("postAt");
@@ -126,6 +127,7 @@ public class CommentDAO implements DAOInterface<CommentModel> {
 
                 CommentModel commentModel = new CommentModel();
 
+                commentModel.setFullName(fullName);
                 commentModel.setCommentID(commentID);
                 commentModel.setContent(content);
                 commentModel.setPostAt(postAt);

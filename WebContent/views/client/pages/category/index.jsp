@@ -18,6 +18,7 @@
 </style>
 
 <body>
+
     <div class="header">
         <div class="header-left">
             <img alt="Digital Newspaper" src="/views/client/assets/img/newspaper.jpg" />
@@ -29,13 +30,34 @@
                 <i class="fas fa-search">
                 </i>
             </div>
-            <button class="btn_login" id="btn_login">Đăng nhập</button>
+          <c:choose>
+
+                          <c:when test="${not empty user}">
+
+
+
+                              <div class="dropdown">
+                                  <i class="fas fa-user" id="person" style= "margin-right:120px;" ></i>
+                                  <div class="dropdown-content">
+                                      <a href="/views/client/pages/home/detailprofile.jsp" id="thongtinchung">Thông tin chung</a>
+                                       <a href="/logout">Đăng xuất</a>
+                                  </div>
+                              </div>
+                          </c:when>
+                          <c:otherwise>
+
+                              <button class="btn_login" id="btn_login"
+                               style="background-color: black; color: white; border: none; padding: 8px 15px; text-align: center; font-size: 16px; border-radius: 5px; cursor: pointer; margin-right:30px; "
+
+                              >Đăng nhập</button>
+                          </c:otherwise>
+                      </c:choose>
             <div class="overlay" id="overlay"></div>
             <div class="modal" id="modal">
                 <div class="container1 login">
                     <div class="toggle">
                         <div class="form-container">
-                            <form action="" method="POST" class="form" id="form-1">
+                            <form action="/login" method="POST" class="form" id="form-1">
                                 <i class="fa-solid fa-delete-left" id="close-btn" style="cursor: pointer;">X</i>
                                 <h2>Đăng nhập</h2>
                                 <div id="message"></div>
@@ -58,7 +80,7 @@
                 </div>
                 <div class="container1 signup" style="display: none;">
                     <div class="form-container-signup">
-                        <form action="" method="POST" id="form-2">
+                        <form action="/register" method="POST" id="form-2">
                             <i class="fa-solid fa-delete-left1" id="close-btn1" style="cursor: pointer;">X</i>
                             <h2>Đăng ký</h2>
                             <div id="message2"></div>

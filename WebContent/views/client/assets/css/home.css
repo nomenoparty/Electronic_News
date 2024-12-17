@@ -32,6 +32,7 @@ body {
 .header-right {
     display: flex;
     align-items: center;
+    margin-left:100px;
 }
 
 .header-right span {
@@ -41,24 +42,13 @@ body {
 }
 
 .header-right i {
-    margin-right: 5px;
-}
-
-.header-right .btn_login {
-    color: black;
-
-    border: none;
-
-    outline: none;
-
-    background-color: transparent;
-
-    transition: transform 0.3s ease;
+    margin-right: 10px;
 
 }
+
+
 
 .header-right .btn_login:hover {
-    transform: scale(1.2);
 
     cursor: pointer;
 
@@ -155,15 +145,7 @@ body {
 
 
 
-.btn_login {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+
 
 
 
@@ -534,6 +516,7 @@ body {
 
 .search {
     position: relative;
+   gap:20px;
 }
 
 #search {
@@ -550,6 +533,7 @@ body {
 .search i {
     cursor: pointer;
     font-size: 20px;
+
 }
 
 .search:hover #search {
