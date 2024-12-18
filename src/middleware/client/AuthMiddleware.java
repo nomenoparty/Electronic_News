@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = { "/", "/article/*", "/category/*", "/home", "/comment", "/profile" })
+@WebFilter(urlPatterns = { "/", "/article/*", "/category/*", "/home", "/comment", "/profile" }, asyncSupported=true)
 public class AuthMiddleware implements Filter {
     private UserDAO adminDao = new UserDAO();
     private RoleDAO roleDAO = new RoleDAO();
