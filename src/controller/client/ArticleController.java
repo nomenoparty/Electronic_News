@@ -10,6 +10,7 @@ import service.admin.CategoryService;
 import service.user.CommentService;
 import service.user.UserService;
 
+import javax.servlet.AsyncContext;
 import javax.servlet.HttpConstraintElement;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +24,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Map;
 
-@WebServlet(urlPatterns = { "/article/*" })
+@WebServlet(urlPatterns = { "/article/*"}, asyncSupported=true)
 public class ArticleController extends HttpServlet {
     private ArticleService articleService = new ArticleService();
     private CategoryService categoryService = new CategoryService();
@@ -32,39 +33,39 @@ public class ArticleController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession(false);
-        UserModel currentUser = null;
-
-        if (session != null && session.getAttribute("user") != null) {
-            currentUser = (UserModel) session.getAttribute("user");
-            req.setAttribute("currentUser", currentUser);
-        }
-
-        boolean isLoggedIn = currentUser != null;
-        req.setAttribute("isLoggedIn", isLoggedIn);
-
         String pathInfo = req.getPathInfo();
         if (pathInfo != null && !pathInfo.isEmpty()) {
             String slug = pathInfo.substring(1);
 
-            ArticleModel articleModel = articleService.getArticleBySlug(slug);
-            int articleID = articleModel.getArticleID();  // articleModel có trường articleID
-            req.setAttribute("articleID", articleID);
+            AsyncContext asyncContext = req.startAsync();
+            // Bắt đầu xử lý bất đồng bộ
+            asyncContext.start(() -> {
+                try {
+                    ArticleModel articleModel = articleService.getArticleBySlug(slug);
+                    int articleID = articleModel.getArticleID();
+                    req.setAttribute("articleID", articleID);
 
-            req.setAttribute("article", articleModel);
+                    req.setAttribute("article", articleModel);
 
-            ArrayList<CategoryModel> categories = categoryService.selectAllCategories();
+                    ArrayList<CategoryModel> categories = categoryService.selectAllCategories();
 
-            Map<CategoryModel, ArrayList<CategoryModel>> map = categoryTree.getCategoryTree(categories);
+                    Map<CategoryModel, ArrayList<CategoryModel>> map = categoryTree.getCategoryTree(categories);
 
-            req.setAttribute("categories", map);
+                    req.setAttribute("categories", map);
 
-            ArrayList<CommentModel> comments = commentService.getCommentsByArticleId(articleModel.getArticleID());
+                    ArrayList<CommentModel> comments = commentService.getCommentsByArticleId(articleModel.getArticleID());
 
-            req.setAttribute("comments", comments);
+                    req.setAttribute("comments", comments);
 
-            RequestDispatcher dispactcher = req.getRequestDispatcher("/views/client/pages/article/index.jsp");
-            dispactcher.forward(req, resp);
+                    RequestDispatcher dispactcher = req.getRequestDispatcher("/views/client/pages/article/index.jsp");
+                    dispactcher.forward(req, resp);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    // Hoàn thành xử lý bất đồng bộ
+                    asyncContext.complete();
+                }
+            });
         }
     }
     @Override
