@@ -4,6 +4,7 @@ import helper.CategoryTree;
 import helper.GetUrl;
 import model.ArticleModel;
 import model.CategoryModel;
+import model.UserModel;
 import service.admin.ArticleService;
 import service.admin.CategoryService;
 
@@ -13,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -24,6 +26,21 @@ public class CategoryController extends HttpServlet {
     private CategoryTree categoryTree = new CategoryTree();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+        // Kiểm tra đăng nhập
+        HttpSession session = req.getSession(false);
+        UserModel currentUser = null;
+
+        if (session != null && session.getAttribute("user") != null) {
+            currentUser = (UserModel) session.getAttribute("user");
+            req.setAttribute("currentUser", currentUser);
+        }
+
+        // Đánh dấu trạng thái đăng nhập
+        boolean isLoggedIn = currentUser != null;
+        req.setAttribute("isLoggedIn", isLoggedIn);
+
         String pathInfo = req.getPathInfo();
         if (pathInfo != null && !pathInfo.isEmpty()) {
             String slug = pathInfo.substring(1);

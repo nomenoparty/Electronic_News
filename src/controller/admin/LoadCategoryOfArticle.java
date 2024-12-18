@@ -6,7 +6,7 @@ import model.UserModel;
 import org.json.JSONObject;
 import service.admin.CategoryService;
 import service.admin.CheckRoleService;
-import service.admin.UserService;
+import service.user.UserService;
 
 import java.io.IOException;
 import java.io.PrintWriter;

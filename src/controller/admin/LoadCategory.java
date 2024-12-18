@@ -1,26 +1,19 @@
 package controller.admin;
 
 import com.google.gson.Gson;
-import dao.impl.UserDAO;
-import helper.GenerateToken;
 import model.CategoryModel;
-import model.RoleModel;
 import model.UserModel;
 import org.json.JSONObject;
-import service.admin.AdminService;
 import service.admin.CategoryService;
 import service.admin.CheckRoleService;
-import service.admin.UserService;
+import service.user.UserService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import javax.management.relation.Role;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

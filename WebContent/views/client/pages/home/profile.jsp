@@ -1,36 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="model.CommentModel" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${article.title}</title>
-    <link rel="stylesheet" href="/views/client/assets/css/home.css">
-    <link rel="stylesheet" href="/views/client/assets/css/content.css">
-
+    <title>
+        VNExpress
+    </title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/views/client/assets/css/home.css">
 </head>
+
 <style>
-    .article-content {
-        display: flex;
-        flex-direction: column;
-    }
-    figure {
-        text-align: center;
-        margin: 20px 0;
-    }
-    img {
-        width: 100%; /* Đảm bảo hình ảnh không vượt quá chiều rộng của container */
-        height: auto; /* Giữ tỉ lệ hình ảnh */
+    .link-text {
+        text-decoration: none;
+        color: black;
     }
 </style>
-<body>
 
-    <div class="header">
+<body>
+<p>Hello,
+        <%= session.getAttribute("username") %>!
+    </p>
+    <p>Hello,
+            <%= session.getAttribute("password") %>!
+        </p>
+
+        <p>Hello,
+                    <%= session.getAttribute("fullname") %>!
+                </p>
+
+        <div class="header">
         <div class="header-left">
             <img alt="Digital Newspaper" src="/views/client/assets/img/newspaper.jpg" />
             <h1>Digital Newspaper</h1>
@@ -41,29 +41,13 @@
                 <i class="fas fa-search">
                 </i>
             </div>
-           <c:choose>
-
-                           <c:when test="${not empty user}">
-
-
-
-                               <div class="dropdown">
-                                   <i class="fas fa-user" id="person" style= "margin-right:120px;" ></i>
-                                   <div class="dropdown-content">
-                                       <a href="/views/client/pages/home/detailprofile.jsp" id="thongtinchung">Thông tin chung</a>
-
-                                        <a href="/logout">Đăng xuất</a>
-                                   </div>
-                               </div>
-                           </c:when>
-                           <c:otherwise>
-
-                               <button class="btn_login" id="btn_login"
-                                style="background-color: black; color: white; border: none; padding: 8px 15px; text-align: center; font-size: 16px; border-radius: 5px; cursor: pointer; margin-right:30px; "
-
-                               >Đăng nhập</button>
-                           </c:otherwise>
-                       </c:choose>
+               <div class="dropdown">
+                <i class="fas fa-user" id="person"></i>
+                <div class="dropdown-content">
+                    <a href="/views/client/pages/home/detailprofile.jsp" id="thongtinchung">Thông tin chung</a>
+                    <a href="/views/client/pages/home/index.jsp" id="thoat">Thoát</a>
+                </div>
+            </div>
             <div class="overlay" id="overlay"></div>
             <div class="modal" id="modal">
                 <div class="container1 login">
@@ -88,8 +72,8 @@
                             </form>
                         </div>
                     </div>
-
                 </div>
+
                 <div class="container1 signup" style="display: none;">
                     <div class="form-container-signup">
                         <form action="/register" method="POST" id="form-2">
@@ -125,6 +109,7 @@
 
         </div>
     </div>
+
     <div class="nav">
         <div class="nav-left">
             <a href="/" id="home"><i class="fas fa-home">
@@ -144,54 +129,66 @@
         </div>
     </div>
 
-    <div class="content-main">
-        <div class="article-title" id="article-title">
-            ${article.title}
-        </div>
-
-        <div class="article-content" id="article-content">
-            ${article.content}
-        </div>
-
+    <div class="container">
+        <c:forEach var="article" items="${articles}" varStatus="status">
+            <c:choose>
+                <c:when test="${status.index == 0}">
+                    <div class="news-item-main">
+                        <a href="/article/${article.slug}">
+                            <img alt="${article.title}"
+                                height="200" src="${article.titleCategory}" id="img-main" width="300" />
+                        </a>
+                        <div class="news-content" id="news-content-main">
+                            <a href="/article/${article.slug}" class="link-text">
+                                <div class="news-title" id="news-title-main">
+                                    ${article.title}
+                                </div>
+                            </a>
+                            <a href="/article/${article.slug}" class="link-text">
+                                <div class="news-description" id="news-description-main">
+                                    ${article.content}
+                                </div>
+                            </a>
+                            <%--<div class="news-footer">
+                                <i class="fas fa-comment">
+                                </i>
+                                <span id="post-time">
+                                    ${article.createdAt}
+                                </span>
+                            </div>--%>
+                        </div>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="news-item-sub">
+                        <a href="/article/${article.slug}">
+                            <img alt="${article.title}" height="200" src="${article.titleCategory}" id="img-sub"
+                                width="300" />
+                        </a>
+                        <div class="news-content" id="news-content-sub">
+                            <a href="/article/${article.slug}" class="link-text">
+                                <div class="news-title" id="news-title-sub">
+                                    ${article.title}
+                                </div>
+                            </a>
+                            <a href="/article/${article.slug}" class="link-text">
+                                <div class="news-description" id="news-description-sub">
+                                    ${article.content}
+                                </div>
+                            </a>
+                        </div>
+                        <%--<div class="news-footer">
+                            <i class="fas fa-comment">
+                            </i>
+                            <span id="post-time">
+                                ${article.createdAt}
+                            </span>
+                        </div>--%>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
     </div>
-
-
-<hr>
-    <form action="/article/${article.slug}" method="post">
-            <textarea name="comment" rows="3" cols="100" placeholder="Add a comment" style= "margin-left:50px;"></textarea><br>
-            <input type="hidden" name="articleID" value="${article.articleID}"">
-            <input type="hidden" name="userID" value="${currentUser.userID}"> <!-- Example userID -->
-            <button type="submit" style= "margin-left:50px;">Bình luận</button>
-        </form>
-
-
-
-
-        <hr>
-
-          <ul>
-            <%
-            ArrayList<CommentModel> comments = (ArrayList<CommentModel>) request.getAttribute("comments");
-            if (comments != null) {
-                for (CommentModel comment : comments) {
-        %>
-
-            <div class="view_comment" style = " display:flex;">
-              <div class="header-left">
-                          <img alt="Digital Newspaper" src="/views/client/assets/img/newspaper.jpg" style="border-radius:50px; heigh:50px; width:50px;" />
-                      </div>
-                <p style= "margin-left:10px;"><strong><%= comment.getFullName() %></strong></p>
-                <p style= "margin-left:10px;"><%= comment.getContent() %></p>
-
-            </div>
-             <p style="margin-left:1000px;"><i> <%= comment.getPostAt() %> </i></p>
-                            <hr>
-        <%
-                }
-            }
-        %>
-        </ul>
-
 
     <script type="module" src="/views/client/assets/js/home.js"></script>
 </body>

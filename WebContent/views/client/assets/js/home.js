@@ -9,10 +9,8 @@ const overlay = document.querySelector('.overlay');
 const modal = document.querySelector('.modal');
 // Sự kiện click vào nút "Đăng nhập"
 btnLogin.addEventListener('click', function () {
-
     overlay.style.display = 'block';
     modal.style.display = 'block';
-
     login();
 });
 const closeBtn = document.querySelector('#close-btn');
