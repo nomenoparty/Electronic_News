@@ -5,6 +5,7 @@
 
 <head>
     <title>
+        VNExpress
     </title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/views/client/assets/css/home.css">
@@ -18,8 +19,18 @@
 </style>
 
 <body>
+<p>Hello,
+        <%= session.getAttribute("username") %>!
+    </p>
+    <p>Hello,
+            <%= session.getAttribute("password") %>!
+        </p>
 
-    <div class="header">
+        <p>Hello,
+                    <%= session.getAttribute("fullname") %>!
+                </p>
+
+        <div class="header">
         <div class="header-left">
             <img alt="Digital Newspaper" src="/views/client/assets/img/newspaper.jpg" />
             <h1>Digital Newspaper</h1>
@@ -30,24 +41,13 @@
                 <i class="fas fa-search">
                 </i>
             </div>
-            <c:choose>
-               <c:when test="${userModel != null}">
-                   <div class="dropdown">
-                       <i class="fas fa-user" id="person" style= "margin-right:120px;" ></i>
-                       <div class="dropdown-content">
-                           <a href="/profile" id="thongtinchung">Thông tin chung</a>
-
-                            <a href="/logout">Đăng xuất</a>
-                       </div>
-                   </div>
-               </c:when>
-               <c:otherwise>
-                   <button class="btn_login" id="btn_login"
-                    style="background-color: black; color: white; border: none; padding: 8px 15px; text-align: center; font-size: 16px; border-radius: 5px; cursor: pointer; margin-right:30px; "
-
-                   >Đăng nhập</button>
-               </c:otherwise>
-           </c:choose>
+               <div class="dropdown">
+                <i class="fas fa-user" id="person"></i>
+                <div class="dropdown-content">
+                    <a href="/views/client/pages/home/detailprofile.jsp" id="thongtinchung">Thông tin chung</a>
+                    <a href="/views/client/pages/home/index.jsp" id="thoat">Thoát</a>
+                </div>
+            </div>
             <div class="overlay" id="overlay"></div>
             <div class="modal" id="modal">
                 <div class="container1 login">
@@ -72,8 +72,8 @@
                             </form>
                         </div>
                     </div>
-
                 </div>
+
                 <div class="container1 signup" style="display: none;">
                     <div class="form-container-signup">
                         <form action="/register" method="POST" id="form-2">
@@ -130,32 +130,63 @@
     </div>
 
     <div class="container">
-        <c:forEach var="article" items="${articles}">
-            <div class="news-item-sub">
-                <a href="/article/${article.slug}">
-                    <img alt="${article.title}" height="200" src="${article.titleCategory}" id="img-sub"
-                        width="300" />
-                </a>
-                <div class="news-content" id="news-content-sub">
-                    <a href="/article/${article.slug}" class="link-text">
-                        <div class="news-title" id="news-title-sub">
-                            ${article.title}
+        <c:forEach var="article" items="${articles}" varStatus="status">
+            <c:choose>
+                <c:when test="${status.index == 0}">
+                    <div class="news-item-main">
+                        <a href="/article/${article.slug}">
+                            <img alt="${article.title}"
+                                height="200" src="${article.titleCategory}" id="img-main" width="300" />
+                        </a>
+                        <div class="news-content" id="news-content-main">
+                            <a href="/article/${article.slug}" class="link-text">
+                                <div class="news-title" id="news-title-main">
+                                    ${article.title}
+                                </div>
+                            </a>
+                            <a href="/article/${article.slug}" class="link-text">
+                                <div class="news-description" id="news-description-main">
+                                    ${article.content}
+                                </div>
+                            </a>
+                            <%--<div class="news-footer">
+                                <i class="fas fa-comment">
+                                </i>
+                                <span id="post-time">
+                                    ${article.createdAt}
+                                </span>
+                            </div>--%>
                         </div>
-                    </a>
-                    <a href="/article/${article.slug}" class="link-text">
-                        <div class="news-description" id="news-description-sub">
-                            ${article.content}
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="news-item-sub">
+                        <a href="/article/${article.slug}">
+                            <img alt="${article.title}" height="200" src="${article.titleCategory}" id="img-sub"
+                                width="300" />
+                        </a>
+                        <div class="news-content" id="news-content-sub">
+                            <a href="/article/${article.slug}" class="link-text">
+                                <div class="news-title" id="news-title-sub">
+                                    ${article.title}
+                                </div>
+                            </a>
+                            <a href="/article/${article.slug}" class="link-text">
+                                <div class="news-description" id="news-description-sub">
+                                    ${article.content}
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-                <%--<div class="news-footer">
-                    <i class="fas fa-comment">
-                    </i>
-                    <span id="post-time">
-                        ${article.createdAt}
-                    </span>
-                </div>--%>
-            </div>
+                        <%--<div class="news-footer">
+                            <i class="fas fa-comment">
+                            </i>
+                            <span id="post-time">
+                                ${article.createdAt}
+                            </span>
+                        </div>--%>
+                    </div>
+                </c:otherwise>
+            </c:choose>
         </c:forEach>
     </div>
 

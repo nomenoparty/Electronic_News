@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.CommentModel" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,11 +24,12 @@
         margin: 20px 0;
     }
     img {
-        width: 100%; /* Đảm bảo hình ảnh không vượt quá chiều rộng của container */
-        height: auto; /* Giữ tỉ lệ hình ảnh */
+        width: 100%;
+        height: auto;
     }
 </style>
 <body>
+
     <div class="header">
         <div class="header-left">
             <img alt="Digital Newspaper" src="/views/client/assets/img/newspaper.jpg" />
@@ -38,65 +41,82 @@
                 <i class="fas fa-search">
                 </i>
             </div>
-            <button class="btn_login" id="btn_login">Đăng nhập</button>
-            <div class="overlay" id="overlay"></div>
-            <div class="modal" id="modal">
-                <div class="container1 login">
-                    <div class="toggle">
-                        <div class="form-container">
-                            <form action="" method="POST" class="form" id="form-1">
-                                <i class="fa-solid fa-delete-left" id="close-btn" style="cursor: pointer;">X</i>
-                                <h2>Đăng nhập</h2>
-                                <div id="message"></div>
-                                <div class="form-group">
-                                    <input id="username" name="username" type="text" placeholder="Tài khoản"
-                                        class="form-control" required>
-                                    <span class="form-message"></span>
-                                </div>
-                                <div class="form-group">
-                                    <input id="password" name="password" type="password" placeholder="Mật khẩu"
-                                        class="form-control" required>
-                                    <span class="form-message"></span>
-                                </div>
-                                <button class="form-submit" type="submit">Đăng nhập</button>
-                                <div class="btn-signup" role="button">Đăng ký</div>
-                            </form>
-                        </div>
-                    </div>
+           <c:choose>
+               <c:when test="${userModel != null}">
+                   <div class="dropdown">
+                       <i class="fas fa-user" id="person" style= "margin-right:120px;" ></i>
+                       <div class="dropdown-content">
+                           <a href="/profile" id="thongtinchung">Thông tin chung</a>
 
-                </div>
-                <div class="container1 signup" style="display: none;">
-                    <div class="form-container-signup">
-                        <form action="" method="POST" id="form-2">
-                            <i class="fa-solid fa-delete-left1" id="close-btn1" style="cursor: pointer;">X</i>
-                            <h2>Đăng ký</h2>
-                            <div id="message2"></div>
+                            <a href="/logout">Đăng xuất</a>
+                       </div>
+                   </div>
+               </c:when>
+               <c:otherwise>
+                   <button class="btn_login" id="btn_login"
+                    style="background-color: black; color: white; border: none; padding: 8px 15px; text-align: center; font-size: 16px; border-radius: 5px; cursor: pointer; margin-right:30px; "
+
+                   >Đăng nhập</button>
+               </c:otherwise>
+           </c:choose>
+        <div class="overlay" id="overlay"></div>
+        <div class="modal" id="modal">
+            <div class="container1 login">
+                <div class="toggle">
+                    <div class="form-container">
+                        <form action="/login" method="POST" class="form" id="form-1">
+                            <i class="fa-solid fa-delete-left" id="close-btn" style="cursor: pointer;">X</i>
+                            <h2>Đăng nhập</h2>
+                            <div id="message"></div>
                             <div class="form-group">
-                                <input id="fullname" name="fullname" type="fullname" placeholder="fullname"
+                                <input id="username" name="username" type="text" placeholder="Tài khoản"
                                     class="form-control" required>
                                 <span class="form-message"></span>
                             </div>
                             <div class="form-group">
-                                <input id="username2" name="username" type="text" placeholder="Tài khoản"
+                                <input id="password" name="password" type="password" placeholder="Mật khẩu"
                                     class="form-control" required>
                                 <span class="form-message"></span>
                             </div>
-                            <div class="form-group">
-                                <input id="password2" name="password" type="password" placeholder="Mật khẩu"
-                                    class="form-control" required>
-                                <span class="form-message"></span>
-                            </div>
-                            <div class="form-group">
-                                <input id="confirm-password" name="confirm-password" type="password"
-                                    placeholder="Nhập lại mật khẩu" class="form-control" required>
-                                <span class="form-message"></span>
-                            </div>
-                            <button class="form-submit" type="submit">Đăng ký</button>
-                            <div class="btn-login" role="button">Đăng nhập</div>
+                            <button class="form-submit" type="submit">Đăng nhập</button>
+                            <div class="btn-signup" role="button">Đăng ký</div>
                         </form>
                     </div>
                 </div>
+
             </div>
+            <div class="container1 signup" style="display: none;">
+                <div class="form-container-signup">
+                    <form action="/register" method="POST" id="form-2">
+                        <i class="fa-solid fa-delete-left1" id="close-btn1" style="cursor: pointer;">X</i>
+                        <h2>Đăng ký</h2>
+                        <div id="message2"></div>
+                        <div class="form-group">
+                            <input id="fullname" name="fullname" type="fullname" placeholder="fullname"
+                                class="form-control" required>
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <input id="username2" name="username" type="text" placeholder="Tài khoản"
+                                class="form-control" required>
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <input id="password2" name="password" type="password" placeholder="Mật khẩu"
+                                class="form-control" required>
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <input id="confirm-password" name="confirm-password" type="password"
+                                placeholder="Nhập lại mật khẩu" class="form-control" required>
+                            <span class="form-message"></span>
+                        </div>
+                        <button class="form-submit" type="submit">Đăng ký</button>
+                        <div class="btn-login" role="button">Đăng nhập</div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         </div>
     </div>
@@ -127,99 +147,34 @@
         <div class="article-content" id="article-content">
             ${article.content}
         </div>
-
-
         <div class="comment-main">
             <div class="comments-header">
                 Ý kiến
                 <span id="comment-count">
-                    (20)
+                    (${comments.size()})
                 </span>
             </div>
             <div class="comment-input">
-                <input id="comment-input" placeholder="Chia sẻ ý kiến của bạn" type="text" />
-                <i class="far fa-smile" id="emoji-picker"></i>
-            </div>
-
-
-            <div class="tabs">
-
-                <div class="tab" data-tab="newest" id="tab-newest">
-                    Mới nhất
-                </div>
+                <form action="/comment" method="POST">
+                    <input id="comment-input" placeholder="Chia sẻ ý kiến của bạn" type="text" name="comment"/>
+                    <input type="text" name="articleID" value="${articleID}" hidden/>
+                     <button type="submit" style="margin-left:10px;">Bình luận</button>
+                </form>
             </div>
 
             <div class="comment" id="comment-1" data-comment-id="1">
-                <img alt="User avatar" class="user-avatar" height="40"
-                    src="img/huydomic.jfif"
-                    width="40" />
-
                 <div class="comment-content">
-                    <div class="username" id="username-anzman005">
-                        anzman005
-                    </div>
-                    <div class="text" id="comment-text-1">
-                        Vui quá mừng cho người lao động... và hi vọng mình cũng sẽ có thưởng cao...
-                    </div>
-                    <div class="actions">
-                        <i class="far fa-thumbs-up" id="like-button-1" onclick="incrementLike(this)"></i>
-                        <span class="like-count" id="like-count-1">
-                            54
-                        </span>
-
-                    </div>
-
+                    <c:forEach var="comment" items="${comments}">
+                        <div class="username" id="username-anzman005">
+                            ${comment.fullName}
+                        </div>
+                        <div class="text" id="comment-text-1">
+                                ${comment.content}
+                        </div>
+                    </c:forEach>
                 </div>
-            </div>
-            <div class="comment">
-                <img alt="User avatar" height="40"
-                    src="img/huydomic.jfif"
-                    width="40" />
-                <div class="comment-content">
-                    <div class="username">
-                        lvcty1
-                    </div>
-                    <div class="text">
-                        Chúc mừng doanh nghiệp và người lao động
-                    </div>
-                    <div class="actions">
-                        <i class="far fa-thumbs-up" onclick="incrementLike(this)">
-                        </i>
-                        <span class="like-count">
-                            54
-                        </span>
-
-
-
-                    </div>
-
-                </div>
-            </div>
-            <div class="comment">
-                <img alt="User avatar" height="40"
-                    src="img/huydomic.jfif"
-                    width="40" />
-                <div class="comment-content">
-                    <div class="username">
-                        Namhai Nguyen
-                    </div>
-                    <div class="text">
-                        Trung bình mỗi lao động được thưởng tết hơn 15 triệu khá cao so với mặt bằng chung
-                    </div>
-                    <div class="actions">
-                        <i class="far fa-thumbs-up" onclick="incrementLike(this)">
-                        </i>
-                        <span class="like-count">
-                            33
-                        </span>
-
-                    </div>
-
-                </div>
-
             </div>
         </div>
-
     </div>
 
     <script type="module" src="/views/client/assets/js/home.js"></script>

@@ -9,6 +9,28 @@ public class CommentModel {
     private int userID;
     private int articleID;
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    private String fullName;
+
+
+
+
+
+
+    public CommentModel(int commentID, String content, Timestamp postAt, int userID, int articleID) {
+        this.commentID = commentID;
+        this.content = content;
+        this.postAt = postAt;
+        this.userID = userID;
+        this.articleID = articleID;
+    }
     public CommentModel(){}
 
     public int getCommentID() {
