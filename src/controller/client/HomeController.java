@@ -4,7 +4,6 @@ import helper.CategoryTree;
 import helper.GetUrl;
 import model.ArticleModel;
 import model.CategoryModel;
-import model.UserModel;
 import service.admin.ArticleService;
 import service.admin.CategoryService;
 
@@ -14,7 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -26,25 +24,6 @@ public class HomeController extends HttpServlet {
 	private CategoryTree categoryTree = new CategoryTree();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		// Kiểm tra session và trạng thái đăng nhập
-		HttpSession session = req.getSession(false);
-		boolean isLoggedIn = false;
-		UserModel currentUser = null;
-
-		if (session != null && session.getAttribute("userModel") != null) {
-			currentUser = (UserModel) session.getAttribute("userModel");
-			isLoggedIn = true; // Đánh dấu đã đăng nhập
-		}
-
-		req.setAttribute("isLoggedIn", isLoggedIn);
-		req.setAttribute("currentUser", currentUser);
-
-
-
-
-
-
 		ArrayList<ArticleModel> articles = articleService.selectAllArticles();
 
 		articles.forEach(i -> {

@@ -17,13 +17,8 @@ public class AuthController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getServletPath();
 
-        if (path.equals("/login")) {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/home");
-            dispatcher.forward(req, resp);
-        } else if (path.equals("/register")) {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/home");
-            dispatcher.forward(req, resp);
-        } else if (path.equals("/logout")) {
+        if (path.equals("/logout")) {
+            System.out.println("out");
             handleLogout(req, resp);
         }
     }
@@ -46,38 +41,25 @@ public class AuthController extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-
         UserModel userModel = userService.login(username, password);
         String referer = req.getHeader("Referer");
 
         if (userModel == null) {
-
-            req.getSession().setAttribute("loginError", "Tài khoản hoặc mật khẩu không đúng");
-            resp.sendRedirect(referer != null ? referer : "/login");
+            System.out.println("Dang nhap that bai");
+            if (referer != null) {
+                resp.sendRedirect(referer);
+            } else {
+                resp.sendRedirect("/admin/login");
+            }
             return;
         }
-
-
-        req.getSession().setAttribute("user", userModel);
-        HttpSession session = req.getSession();
-        session.setAttribute("username", username);
-        session.setAttribute("password", password);
-        session.setAttribute("userModel", userModel);
-
 
         Cookie cookie = new Cookie("userToken", userModel.getTokenUser());
         cookie.setPath("/");
         cookie.setMaxAge(1 * 60 * 60); // 1 giờ
         resp.addCookie(cookie);
 
-
-        if (userModel.getRoleID() == 1) {
-            resp.sendRedirect(referer != null ? referer : "/login");
-//            resp.sendRedirect("/login");
-        } else {
-
-            resp.sendRedirect("/dashboard");
-        }
+        resp.sendRedirect(referer);
     }
 
     private void handleRegister(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -86,10 +68,11 @@ public class AuthController extends HttpServlet {
         String password = req.getParameter("password");
         String confirmPassword = req.getParameter("confirm-password");
 
+        String referer = req.getHeader("Referer");
 
         if (!password.equals(confirmPassword)) {
             req.getSession().setAttribute("registerError", "Mật khẩu không khớp");
-            resp.sendRedirect("/register");
+            resp.sendRedirect(referer);
             return;
         }
 
@@ -97,49 +80,43 @@ public class AuthController extends HttpServlet {
         userModel.setFullName(fullname);
         userModel.setUsername(username);
         userModel.setPassword(password);
-        userModel.setPermission("client");
+        userModel.setPermission("user");
 
         boolean registered = userService.register(userModel);
 
         if (!registered) {
-
             req.getSession().setAttribute("registerError", "Tên đăng nhập đã tồn tại");
-            resp.sendRedirect("/register");
+            resp.sendRedirect(referer);
             return;
         }
 
+        Cookie cookie = new Cookie("userToken", userModel.getTokenUser());
+        cookie.setPath("/");
+        cookie.setMaxAge(1 * 60 * 60); // 1 giờ
+        resp.addCookie(cookie);
 
-        req.getSession().setAttribute("registerSuccess", "Đăng ký thành công. Vui lòng đăng nhập.");
-        HttpSession session = req.getSession();
-        session.setAttribute("fullname", fullname);
-        resp.sendRedirect("/login");
+        resp.sendRedirect(referer);
     }
 
-
     private void handleLogout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
-        HttpSession session = req.getSession(false); // Lấy session hiện tại, không tạo mới
-        if (session != null) {
-
-            session.invalidate();
-        }
-
-        String referer = req.getHeader("Referer");
-            resp.sendRedirect(referer != null ? referer : "/home");
-
-
         Cookie[] cookies = req.getCookies();
+
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if ("userToken".equals(cookie.getName())) {
-                    cookie.setMaxAge(0);
+                if (cookie.getName().equals("userToken")) {
+                    cookie.setValue("");
                     cookie.setPath("/");
+                    cookie.setMaxAge(0);
                     resp.addCookie(cookie);
+
+                    String referer = req.getHeader("Referer");
+
+                    System.out.println("Dang xuat thanh cong");
+                    resp.sendRedirect(referer);
+
+                    return;
                 }
             }
         }
-
-
-//        resp.sendRedirect("/home");
     }
 }

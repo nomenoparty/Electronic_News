@@ -6,7 +6,6 @@ import model.UserModel;
 import org.json.JSONObject;
 import service.admin.CategoryService;
 import service.admin.CheckRoleService;
-import service.user.UserService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 public class LoadCategoryOfArticle extends HttpServlet {
     private CheckRoleService checkRoleService = new CheckRoleService();
     private CategoryService categoryService = new CategoryService();
-    private UserService userService = new UserService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserModel user = (UserModel) req.getAttribute("user");

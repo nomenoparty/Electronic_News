@@ -1,4 +1,4 @@
-package service.user;
+package service.admin;
 
 import dao.impl.RoleDAO;
 import dao.impl.UserDAO;
@@ -25,7 +25,7 @@ public class UserService {
     }
     public void insertUser(UserModel userModel) {
         RoleModel role = roleDAO.selectWithPermission(userModel.getPermission());
-        userModel.setRoleID(role.getRoleID());
+        userModel.setRoleID(1);
 
         String token = GenerateToken.generateToken();
         userModel.setTokenUser(token);
@@ -38,21 +38,11 @@ public class UserService {
     public UserModel login(String username, String password) {
         UserModel userModel = userDAO.selectByUsername(username);
 
-        if (userModel == null) {
-            System.out.println("Username khong ton tai");
-
+        if (userModel != null && userModel.getPassword().equals(password)) {
             return userModel;
         }
 
-        if (!userModel.getPassword().equals(password)) {
-            System.out.println("Sai mat khau");
-
-            return null;
-        }
-
-        if(userModel.getRoleID() != 1) return null;
-
-        return userModel;
+        return null;
     }
 
     public boolean register(UserModel userModel) {
@@ -63,6 +53,7 @@ public class UserService {
         insertUser(userModel);
         return true;
     }
+
 
     public int getClientActiveSize(){
         return userDAO.countClientByStatus("active");

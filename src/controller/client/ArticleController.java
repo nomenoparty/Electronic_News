@@ -32,9 +32,6 @@ public class ArticleController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-
         HttpSession session = req.getSession(false);
         UserModel currentUser = null;
 
@@ -43,14 +40,8 @@ public class ArticleController extends HttpServlet {
             req.setAttribute("currentUser", currentUser);
         }
 
-
         boolean isLoggedIn = currentUser != null;
         req.setAttribute("isLoggedIn", isLoggedIn);
-
-
-
-
-
 
         String pathInfo = req.getPathInfo();
         if (pathInfo != null && !pathInfo.isEmpty()) {
@@ -68,12 +59,9 @@ public class ArticleController extends HttpServlet {
 
             req.setAttribute("categories", map);
 
-            // Lấy các bình luận cho bài viết
             ArrayList<CommentModel> comments = commentService.getCommentsByArticleId(articleModel.getArticleID());
 
             req.setAttribute("comments", comments);
-
-
 
             RequestDispatcher dispactcher = req.getRequestDispatcher("/views/client/pages/article/index.jsp");
             dispactcher.forward(req, resp);

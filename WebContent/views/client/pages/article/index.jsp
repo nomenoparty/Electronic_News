@@ -24,8 +24,8 @@
         margin: 20px 0;
     }
     img {
-        width: 100%; /* Đảm bảo hình ảnh không vượt quá chiều rộng của container */
-        height: auto; /* Giữ tỉ lệ hình ảnh */
+        width: 100%;
+        height: auto;
     }
 </style>
 <body>
@@ -42,86 +42,81 @@
                 </i>
             </div>
            <c:choose>
+               <c:when test="${userModel != null}">
+                   <div class="dropdown">
+                       <i class="fas fa-user" id="person" style= "margin-right:120px;" ></i>
+                       <div class="dropdown-content">
+                           <a href="/profile" id="thongtinchung">Thông tin chung</a>
 
-                           <c:when test="${not empty user}">
+                            <a href="/logout">Đăng xuất</a>
+                       </div>
+                   </div>
+               </c:when>
+               <c:otherwise>
+                   <button class="btn_login" id="btn_login"
+                    style="background-color: black; color: white; border: none; padding: 8px 15px; text-align: center; font-size: 16px; border-radius: 5px; cursor: pointer; margin-right:30px; "
 
-
-
-                               <div class="dropdown">
-                                   <i class="fas fa-user" id="person" style= "margin-right:120px;" ></i>
-                                   <div class="dropdown-content">
-                                       <a href="/views/client/pages/home/detailprofile.jsp" id="thongtinchung">Thông tin chung</a>
-
-                                        <a href="/logout">Đăng xuất</a>
-                                   </div>
-                               </div>
-                           </c:when>
-                           <c:otherwise>
-
-                               <button class="btn_login" id="btn_login"
-                                style="background-color: black; color: white; border: none; padding: 8px 15px; text-align: center; font-size: 16px; border-radius: 5px; cursor: pointer; margin-right:30px; "
-
-                               >Đăng nhập</button>
-                           </c:otherwise>
-                       </c:choose>
-            <div class="overlay" id="overlay"></div>
-            <div class="modal" id="modal">
-                <div class="container1 login">
-                    <div class="toggle">
-                        <div class="form-container">
-                            <form action="/login" method="POST" class="form" id="form-1">
-                                <i class="fa-solid fa-delete-left" id="close-btn" style="cursor: pointer;">X</i>
-                                <h2>Đăng nhập</h2>
-                                <div id="message"></div>
-                                <div class="form-group">
-                                    <input id="username" name="username" type="text" placeholder="Tài khoản"
-                                        class="form-control" required>
-                                    <span class="form-message"></span>
-                                </div>
-                                <div class="form-group">
-                                    <input id="password" name="password" type="password" placeholder="Mật khẩu"
-                                        class="form-control" required>
-                                    <span class="form-message"></span>
-                                </div>
-                                <button class="form-submit" type="submit">Đăng nhập</button>
-                                <div class="btn-signup" role="button">Đăng ký</div>
-                            </form>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="container1 signup" style="display: none;">
-                    <div class="form-container-signup">
-                        <form action="/register" method="POST" id="form-2">
-                            <i class="fa-solid fa-delete-left1" id="close-btn1" style="cursor: pointer;">X</i>
-                            <h2>Đăng ký</h2>
-                            <div id="message2"></div>
+                   >Đăng nhập</button>
+               </c:otherwise>
+           </c:choose>
+        <div class="overlay" id="overlay"></div>
+        <div class="modal" id="modal">
+            <div class="container1 login">
+                <div class="toggle">
+                    <div class="form-container">
+                        <form action="/login" method="POST" class="form" id="form-1">
+                            <i class="fa-solid fa-delete-left" id="close-btn" style="cursor: pointer;">X</i>
+                            <h2>Đăng nhập</h2>
+                            <div id="message"></div>
                             <div class="form-group">
-                                <input id="fullname" name="fullname" type="fullname" placeholder="fullname"
+                                <input id="username" name="username" type="text" placeholder="Tài khoản"
                                     class="form-control" required>
                                 <span class="form-message"></span>
                             </div>
                             <div class="form-group">
-                                <input id="username2" name="username" type="text" placeholder="Tài khoản"
+                                <input id="password" name="password" type="password" placeholder="Mật khẩu"
                                     class="form-control" required>
                                 <span class="form-message"></span>
                             </div>
-                            <div class="form-group">
-                                <input id="password2" name="password" type="password" placeholder="Mật khẩu"
-                                    class="form-control" required>
-                                <span class="form-message"></span>
-                            </div>
-                            <div class="form-group">
-                                <input id="confirm-password" name="confirm-password" type="password"
-                                    placeholder="Nhập lại mật khẩu" class="form-control" required>
-                                <span class="form-message"></span>
-                            </div>
-                            <button class="form-submit" type="submit">Đăng ký</button>
-                            <div class="btn-login" role="button">Đăng nhập</div>
+                            <button class="form-submit" type="submit">Đăng nhập</button>
+                            <div class="btn-signup" role="button">Đăng ký</div>
                         </form>
                     </div>
                 </div>
+
             </div>
+            <div class="container1 signup" style="display: none;">
+                <div class="form-container-signup">
+                    <form action="/register" method="POST" id="form-2">
+                        <i class="fa-solid fa-delete-left1" id="close-btn1" style="cursor: pointer;">X</i>
+                        <h2>Đăng ký</h2>
+                        <div id="message2"></div>
+                        <div class="form-group">
+                            <input id="fullname" name="fullname" type="fullname" placeholder="fullname"
+                                class="form-control" required>
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <input id="username2" name="username" type="text" placeholder="Tài khoản"
+                                class="form-control" required>
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <input id="password2" name="password" type="password" placeholder="Mật khẩu"
+                                class="form-control" required>
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <input id="confirm-password" name="confirm-password" type="password"
+                                placeholder="Nhập lại mật khẩu" class="form-control" required>
+                            <span class="form-message"></span>
+                        </div>
+                        <button class="form-submit" type="submit">Đăng ký</button>
+                        <div class="btn-login" role="button">Đăng nhập</div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         </div>
     </div>
@@ -152,46 +147,35 @@
         <div class="article-content" id="article-content">
             ${article.content}
         </div>
-
-    </div>
-
-
-<hr>
-    <form action="/article/${article.slug}" method="post">
-            <textarea name="comment" rows="3" cols="100" placeholder="Add a comment" style= "margin-left:50px;"></textarea><br>
-            <input type="hidden" name="articleID" value="${article.articleID}"">
-            <input type="hidden" name="userID" value="${currentUser.userID}"> <!-- Example userID -->
-            <button type="submit" style= "margin-left:50px;">Bình luận</button>
-        </form>
-
-
-
-
-        <hr>
-
-          <ul>
-            <%
-            ArrayList<CommentModel> comments = (ArrayList<CommentModel>) request.getAttribute("comments");
-            if (comments != null) {
-                for (CommentModel comment : comments) {
-        %>
-
-            <div class="view_comment" style = " display:flex;">
-              <div class="header-left">
-                          <img alt="Digital Newspaper" src="/views/client/assets/img/newspaper.jpg" style="border-radius:50px; heigh:50px; width:50px;" />
-                      </div>
-                <p style= "margin-left:10px;"><strong><%= comment.getFullName() %></strong></p>
-                <p style= "margin-left:10px;"><%= comment.getContent() %></p>
-
+        <div class="comment-main">
+            <div class="comments-header">
+                Ý kiến
+                <span id="comment-count">
+                    (${comments.size()})
+                </span>
             </div>
-             <p style="margin-left:1000px;"><i> <%= comment.getPostAt() %> </i></p>
-                            <hr>
-        <%
-                }
-            }
-        %>
-        </ul>
+            <div class="comment-input">
+                <form action="/comment" method="POST">
+                    <input id="comment-input" placeholder="Chia sẻ ý kiến của bạn" type="text" name="comment"/>
+                    <input type="text" name="articleID" value="${articleID}" hidden/>
+                     <button type="submit" style="margin-left:10px;">Bình luận</button>
+                </form>
+            </div>
 
+            <div class="comment" id="comment-1" data-comment-id="1">
+                <div class="comment-content">
+                    <c:forEach var="comment" items="${comments}">
+                        <div class="username" id="username-anzman005">
+                            ${comment.fullName}
+                        </div>
+                        <div class="text" id="comment-text-1">
+                                ${comment.content}
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script type="module" src="/views/client/assets/js/home.js"></script>
 </body>

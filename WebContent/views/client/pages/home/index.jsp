@@ -33,28 +33,21 @@
                 </i>
             </div>
             <c:choose>
-
-                <c:when test="${not empty user}">
-
-
-
+               <c:when test="${userModel == null}">
+                   <button class="btn_login" id="btn_login" style="background-color: black; color: white; border: none; padding: 8px 15px; text-align: center; font-size: 16px; border-radius: 5px; cursor: pointer; margin-right:30px; "
+                   >Đăng nhập</button>
+               </c:when>
+               <c:otherwise>
                     <div class="dropdown">
-                        <i class="fas fa-user" id="person" style= "margin-right:120px;" ></i>
-                        <div class="dropdown-content">
-                            <a href="/views/client/pages/home/detailprofile.jsp" id="thongtinchung">Thông tin chung</a>
+                       <i class="fas fa-user" id="person" style= "margin-right:120px;" ></i>
+                       <div class="dropdown-content">
+                           <a href="/profile" id="thongtinchung">Thông tin chung</a>
 
-                             <a href="/logout">Đăng xuất</a>
-                        </div>
-                    </div>
-                </c:when>
-                <c:otherwise>
-
-                    <button class="btn_login" id="btn_login"
-                     style="background-color: black; color: white; border: none; padding: 8px 15px; text-align: center; font-size: 16px; border-radius: 5px; cursor: pointer; margin-right:30px; "
-
-                    >Đăng nhập</button>
-                </c:otherwise>
-            </c:choose>
+                            <a href="/logout">Đăng xuất</a>
+                       </div>
+                   </div>
+               </c:otherwise>
+           </c:choose>
             <div class="overlay" id="overlay"></div>
             <div class="modal" id="modal">
                 <div class="container1 login">

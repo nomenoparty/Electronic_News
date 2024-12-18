@@ -32,20 +32,7 @@ public class CommentService {
         return commentDAO.update(comment);
     }
 
-
-    public int deleteComment(int commentID) {
-        CommentModel comment = new CommentModel();
-        comment.setCommentID(commentID);
-        return commentDAO.delete(comment);
-    }
-
-
     public ArrayList<CommentModel> getCommentsByArticleId(int articleID) {
         return commentDAO.selectByArticleId(articleID);
-    }
-
-
-    public CommentModel getCommentById(int commentID) {
-        return commentDAO.selectById(commentID);
     }
 }

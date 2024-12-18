@@ -4,9 +4,8 @@ import com.google.gson.Gson;
 import dao.impl.UserDAO;
 import model.UserModel;
 import org.json.JSONObject;
-import service.admin.AdminService;
 import service.admin.CheckRoleService;
-import service.user.UserService;
+import service.admin.UserService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(urlPatterns = { "/admin/account/update" })
 public class UpdateAccountController extends HttpServlet {
-    private AdminService adminService = new AdminService();
     private CheckRoleService checkRoleService = new CheckRoleService();
     private UserDAO userDAO = new UserDAO();
     private UserService userService = new UserService();

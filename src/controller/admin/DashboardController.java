@@ -3,7 +3,7 @@ package controller.admin;
 import service.admin.AdminService;
 import service.admin.ArticleService;
 import service.admin.CategoryService;
-import service.user.UserService;
+import service.admin.UserService;
 
 import java.io.IOException;
 

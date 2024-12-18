@@ -2,7 +2,7 @@ package controller.admin;
 
 import model.UserModel;
 import service.admin.CheckRoleService;
-import service.user.UserService;
+import service.admin.UserService;
 
 import java.io.IOException;
 

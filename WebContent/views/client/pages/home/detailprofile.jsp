@@ -22,50 +22,37 @@
 <body>
 
     <div class="header">
-            <div class="header-left">
-                <img alt="Digital Newspaper" src="/views/client/assets/img/newspaper.jpg" />
-                <h1>Digital Newspaper</h1>
+        <div class="header-left">
+            <img alt="Digital Newspaper" src="/views/client/assets/img/newspaper.jpg" />
+            <h1>Digital Newspaper</h1>
+        </div>
+        <div class="header-right">
+            <div class="search" style = >
+                <input placeholder="Tìm kiếm thông tin" type="text" id="search" />
+                <i class="fas fa-search" >
+                </i>
             </div>
-            <div class="header-right">
-                <div class="search" style = >
-                    <input placeholder="Tìm kiếm thông tin" type="text" id="search" />
-                    <i class="fas fa-search" >
-                    </i>
-                </div>
-                <c:choose>
+            <c:choose>
+               <c:when test="${userModel != null}">
+                   <div class="dropdown">
+                       <i class="fas fa-user" id="person" style= "margin-right:120px;" ></i>
+                       <div class="dropdown-content">
+                           <a href="/views/client/pages/home/detailprofile.jsp" id="thongtinchung">Thông tin chung</a>
 
-                    <c:when test="${not empty user}">
+                            <a href="/logout">Đăng xuất</a>
+                       </div>
+                   </div>
+               </c:when>
+               <c:otherwise>
+                   <button class="btn_login" id="btn_login"
+                    style="background-color: black; color: white; border: none; padding: 8px 15px; text-align: center; font-size: 16px; border-radius: 5px; cursor: pointer; margin-right:30px; "
 
-
-
-                        <div class="dropdown">
-                            <i class="fas fa-user" id="person" style= "margin-right:120px;" ></i>
-                            <div class="dropdown-content">
-                                <a href="/views/client/pages/home/detailprofile.jsp" id="thongtinchung">Thông tin chung</a>
-
-                                 <a href="/logout">Đăng xuất</a>
-                            </div>
-                        </div>
-                    </c:when>
-                    <c:otherwise>
-
-                        <button class="btn_login" id="btn_login"
-                         style="background-color: black; color: white; border: none; padding: 8px 15px; text-align: center; font-size: 16px; border-radius: 5px; cursor: pointer; margin-right:30px; "
-
-                        >Đăng nhập</button>
-                    </c:otherwise>
-                </c:choose>
-
-
-
-
-
-                </div>
-
+                   >Đăng nhập</button>
+               </c:otherwise>
+            </c:choose>
             </div>
         </div>
-
-
+    </div>
 
     <div class="container-profile">
             <div class="sidebar">
@@ -74,7 +61,7 @@
                     width="80" />
 
                 <ul>
-                    <li><a href="/views/client/pages/home/detailprofile.jsp"> <i class="fas fa-info-circle"></i> Thông tin chung</a></li>
+                    <li><a href="/profile"> <i class="fas fa-info-circle"></i> Thông tin chung</a></li>
                     <li><a href="/"> <i class="fas fa-sign-out-alt"></i> Thoát</a></li>
                 </ul>
             </div>
@@ -90,16 +77,16 @@
                        Username
                     </p>
                     <p id="email">
-                          <%= session.getAttribute("username") %>
+                      ${userModel.username}
                     </p>
 
                 </div>
                 <div class="info-section">
                     <p>
-                        Mật khẩu
+                        FullName
                     </p>
                     <p id="password">
-                       <%= session.getAttribute("password") %>
+                       ${userModel.fullName}
                     </p>
 
                 </div>
